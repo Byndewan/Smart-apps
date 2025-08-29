@@ -32,7 +32,7 @@ const Dashboard: React.FC = () => {
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-pink-text mb-2">My S.M.A.R.T Goals</h1>
+          <h1 className="text-4xl font-bold text-pink-text mb-2">My SMART Goals</h1>
           <p className="text-pink-text/70">Plan your dreams and make them come true</p>
         </div>
         <button

@@ -50,7 +50,7 @@ const ForgotPassword: React.FC = () => {
           <div className="mx-auto w-24 h-24 bg-pink-gradient rounded-full flex items-center justify-center mb-4 shadow-pink">
             <HeartIcon className="h-12 w-12 text-white" />
           </div>
-          <h1 className="text-4xl font-bold text-pink-text mb-2">S.M.A.R.T Goals</h1>
+          <h1 className="text-4xl font-bold text-pink-text mb-2">SMART Goals</h1>
           <h2 className="text-2xl font-semibold text-pink-text">
             Reset Password
           </h2>

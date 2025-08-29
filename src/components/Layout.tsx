@@ -40,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="mx-auto w-20 h-20 bg-pink-gradient rounded-full flex items-center justify-center mb-4 shadow-pink">
               <HeartIcon className="h-10 w-10 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-pink-text mb-2">S.M.A.R.T Goals</h1>
+            <h1 className="text-3xl font-bold text-pink-text mb-2">SMART Goals</h1>
             <p className="text-pink-text/70 mb-6">Sign in to start creating and managing your beautiful goals</p>
             <button
               onClick={handleGoogleSignIn}
@@ -66,7 +66,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center">
             <HeartIcon className="h-6 w-6 text-primary-pink mr-2" />
-            <h1 className="text-xl font-bold text-pink-text">S.M.A.R.T Goals</h1>
+            <h1 className="text-xl font-bold text-pink-text">SMART Goals</h1>
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-pink-text text-sm">{user.displayName}</span>
