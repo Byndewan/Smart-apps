@@ -4,7 +4,7 @@ import TargetCard from './TargetCard';
 import HabitTrackerComponent from './HabitTracker';
 import { useFirebase } from '../hooks/useFirebase';
 import StepForm from './StepForm';
-import { TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, PlusIcon, HeartIcon } from '@heroicons/react/24/outline';
 
 interface PlanCardProps {
   plan: Plan;
@@ -32,7 +32,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   const [newHabitFrequency, setNewHabitFrequency] = useState<'daily' | 'weekly' | 'monthly'>('daily');
 
   const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this plan?')) {
+    if (window.confirm('Are you sure you want to delete this beautiful plan?')) {
       try {
         await deletePlan(plan.id);
       } catch (error) {
@@ -91,24 +91,30 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+    <div className="card-romantic overflow-hidden transition-all hover:transform hover:scale-[1.02]">
       <div className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <h2 className="text-xl font-semibold text-gray-800">{plan.title}</h2>
+          <div>
+            <h2 className="text-xl font-semibold text-pink-text">{plan.title}</h2>
+            <div className="text-xs text-pink-text/70 mt-1">
+              Created: {plan.createdAt.toLocaleDateString()}
+            </div>
+          </div>
           <button
             onClick={handleDelete}
-            className="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50 transition-colors"
+            className="text-pink-text/50 hover:text-primary-pink p-1 rounded-full hover:bg-soft-pink transition-colors"
+            aria-label="Delete plan"
           >
             <TrashIcon className="h-5 w-5" />
           </button>
         </div>
 
         <div className="mb-4">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="font-medium text-gray-700">Steps</h3>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-medium text-pink-text">Steps to Success</h3>
             <button
               onClick={() => setIsAddingStep(!isAddingStep)}
-              className="text-blue-500 hover:text-blue-700 flex items-center text-sm bg-blue-50 px-3 py-1 rounded-md transition-colors"
+              className="text-primary-pink hover:text-dark-pink flex items-center text-sm bg-soft-pink px-3 py-1.5 rounded-xl transition-colors"
             >
               <PlusIcon className="h-4 w-4 mr-1" />
               Add Step
@@ -120,17 +126,20 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
           )}
 
           {plan.steps.length === 0 ? (
-            <p className="text-gray-500 text-sm italic py-3">No steps added yet</p>
+            <div className="text-center py-4">
+              <HeartIcon className="h-8 w-8 text-soft-pink mx-auto mb-2" />
+              <p className="text-pink-text/70 italic">No steps added yet. Start your journey!</p>
+            </div>
           ) : (
             <div className="space-y-4 mt-3">
               {plan.steps.map((step) => (
-                <div key={step.id} className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <div key={step.id} className="bg-soft-pink/30 p-4 rounded-xl border border-border-pink">
                   <div 
                     className="flex justify-between items-start cursor-pointer"
                     onClick={() => toggleStepExpansion(step.id)}
                   >
-                    <h4 className="font-medium text-gray-800">{step.title}</h4>
-                    <span className="text-gray-400 text-sm">
+                    <h4 className="font-medium text-pink-text">{step.title}</h4>
+                    <span className="text-primary-pink text-sm">
                       {expandedStep === step.id ? '▲' : '▼'}
                     </span>
                   </div>
@@ -138,24 +147,24 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                   {expandedStep === step.id && (
                     <div className="mt-3 space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                        <div><span className="font-medium text-gray-700">Specific:</span> {step.specific}</div>
-                        <div><span className="font-medium text-gray-700">Meaningful:</span> {step.meaningful}</div>
-                        <div><span className="font-medium text-gray-700">Achievable:</span> {step.achievable}</div>
-                        <div><span className="font-medium text-gray-700">Rewarded:</span> {step.rewarded}</div>
+                        <div><span className="font-medium text-pink-text">Specific:</span> {step.specific}</div>
+                        <div><span className="font-medium text-pink-text">Meaningful:</span> {step.meaningful}</div>
+                        <div><span className="font-medium text-pink-text">Achievable:</span> {step.achievable}</div>
+                        <div><span className="font-medium text-pink-text">Rewarded:</span> {step.rewarded}</div>
                         <div className="md:col-span-2">
-                          <span className="font-medium text-gray-700">Time-bound:</span> {step.timeBound.toLocaleDateString()}
+                          <span className="font-medium text-pink-text">Time-bound:</span> {step.timeBound.toLocaleDateString()}
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-gray-200">
+                      <div className="mt-4 pt-3 border-t border-border-pink">
                         <div className="flex items-center justify-between mb-3">
-                          <h5 className="font-medium text-gray-700">Targets</h5>
+                          <h5 className="font-medium text-pink-text">Targets</h5>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               setIsAddingTarget({stepId: step.id, isAdding: true});
                             }}
-                            className="text-blue-500 hover:text-blue-700 flex items-center text-xs bg-blue-50 px-2 py-1 rounded transition-colors"
+                            className="text-primary-pink hover:text-dark-pink flex items-center text-xs bg-soft-pink px-2 py-1 rounded transition-colors"
                           >
                             <PlusIcon className="h-3 w-3 mr-1" />
                             Add Target
@@ -163,25 +172,25 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                         </div>
 
                         {isAddingTarget.stepId === step.id && isAddingTarget.isAdding && (
-                          <div className="mb-3 p-3 bg-white rounded border border-gray-200">
+                          <div className="mb-3 p-3 bg-white rounded-xl border border-border-pink">
                             <input
                               type="text"
                               value={newTargetText}
                               onChange={(e) => setNewTargetText(e.target.value)}
-                              placeholder="Enter target description"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="What do you want to achieve?"
+                              className="w-full px-3 py-2 border border-border-pink rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-pink focus:border-primary-pink"
                               autoFocus
                             />
                             <div className="flex justify-end space-x-2 mt-2">
                               <button
                                 onClick={() => handleAddTarget(step.id)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+                                className="bg-primary-pink hover:bg-dark-pink text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
                               >
                                 Add
                               </button>
                               <button
                                 onClick={() => setIsAddingTarget({stepId: '', isAdding: false})}
-                                className="bg-gray-500 text-white px-3 py-1 rounded text-sm"
+                                className="bg-soft-pink hover:bg-border-pink text-pink-text px-3 py-1.5 rounded-lg text-sm transition-colors"
                               >
                                 Cancel
                               </button>
@@ -190,7 +199,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                         )}
 
                         {step.targets.length === 0 ? (
-                          <p className="text-gray-500 text-sm italic">No targets added yet</p>
+                          <p className="text-pink-text/70 text-sm italic">No targets added yet</p>
                         ) : (
                           <div className="space-y-2">
                             {step.targets.map((target) => (
@@ -209,15 +218,15 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                         )}
                       </div>
 
-                      <div className="mt-4 pt-3 border-t border-gray-200">
+                      <div className="mt-4 pt-3 border-t border-border-pink">
                         <div className="flex items-center justify-between mb-3">
-                          <h5 className="font-medium text-gray-700">Habit Trackers</h5>
+                          <h5 className="font-medium text-pink-text">Habit Trackers</h5>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               setIsAddingHabit({stepId: step.id, isAdding: true});
                             }}
-                            className="text-blue-500 hover:text-blue-700 flex items-center text-xs bg-blue-50 px-2 py-1 rounded transition-colors"
+                            className="text-primary-pink hover:text-dark-pink flex items-center text-xs bg-soft-pink px-2 py-1 rounded transition-colors"
                           >
                             <PlusIcon className="h-3 w-3 mr-1" />
                             Add Habit
@@ -225,19 +234,19 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                         </div>
 
                         {isAddingHabit.stepId === step.id && isAddingHabit.isAdding && (
-                          <div className="mb-3 p-3 bg-white rounded border border-gray-200">
+                          <div className="mb-3 p-3 bg-white rounded-xl border border-border-pink">
                             <input
                               type="text"
                               value={newHabitTitle}
                               onChange={(e) => setNewHabitTitle(e.target.value)}
-                              placeholder="Enter habit title"
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2"
+                              placeholder="What habit will help you?"
+                              className="w-full px-3 py-2 border border-border-pink rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-pink focus:border-primary-pink mb-2"
                               autoFocus
                             />
                             <select
                               value={newHabitFrequency}
                               onChange={(e) => setNewHabitFrequency(e.target.value as 'daily' | 'weekly' | 'monthly')}
-                              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-3 py-2 border border-border-pink rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-pink focus:border-primary-pink"
                             >
                               <option value="daily">Daily</option>
                               <option value="weekly">Weekly</option>
@@ -246,13 +255,13 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                             <div className="flex justify-end space-x-2 mt-2">
                               <button
                                 onClick={() => handleAddHabit(step.id)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
+                                className="bg-primary-pink hover:bg-dark-pink text-white px-3 py-1.5 rounded-lg text-sm transition-colors"
                               >
                                 Add
                               </button>
                               <button
                                 onClick={() => setIsAddingHabit({stepId: '', isAdding: false})}
-                                className="bg-gray-500 text-white px-3 py-1 rounded text-sm"
+                                className="bg-soft-pink hover:bg-border-pink text-pink-text px-3 py-1.5 rounded-lg text-sm transition-colors"
                               >
                                 Cancel
                               </button>
@@ -261,7 +270,7 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
                         )}
 
                         {step.habitTrackers.length === 0 ? (
-                          <p className="text-gray-500 text-sm italic">No habit trackers added yet</p>
+                          <p className="text-pink-text/70 text-sm italic">No habit trackers added yet</p>
                         ) : (
                           <div className="space-y-3">
                             {step.habitTrackers.map((habit) => (
@@ -285,10 +294,6 @@ const PlanCard: React.FC<PlanCardProps> = ({ plan }) => {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="text-xs text-gray-500">
-          Created: {plan.createdAt.toLocaleDateString()}
         </div>
       </div>
     </div>

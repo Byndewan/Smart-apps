@@ -27,12 +27,13 @@ const TargetCard: React.FC<TargetCardProps> = ({ target, onUpdate, onDelete }) =
   };
 
   return (
-    <div className={`p-4 rounded-lg border ${target.completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-200'} mb-3`}>
+    <div className={`p-4 rounded-xl border ${target.completed ? 'bg-green-50 border-green-200' : 'bg-card-bg border-border-pink'} mb-3 shadow-sm`}>
       <div className="flex items-start justify-between">
         <div className="flex items-start flex-1">
           <button
             onClick={toggleComplete}
-            className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded-full border flex items-center justify-center mr-3 ${target.completed ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}
+            className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded-full border flex items-center justify-center mr-3 transition-colors ${target.completed ? 'bg-green-500 border-green-500' : 'border-border-pink hover:border-primary-pink'}`}
+            aria-label={target.completed ? "Mark as incomplete" : "Mark as complete"}
           >
             {target.completed && <CheckIcon className="h-4 w-4 text-white" />}
           </button>
@@ -43,19 +44,19 @@ const TargetCard: React.FC<TargetCardProps> = ({ target, onUpdate, onDelete }) =
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-border-pink rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-pink focus:border-primary-pink"
                 autoFocus
               />
               <div className="flex space-x-2 mt-2">
                 <button
                   onClick={handleSave}
-                  className="text-sm bg-blue-500 text-white px-2 py-1 rounded"
+                  className="text-sm bg-primary-pink hover:bg-dark-pink text-white px-3 py-1.5 rounded-lg transition-colors"
                 >
                   Save
                 </button>
                 <button
                   onClick={handleCancel}
-                  className="text-sm bg-gray-500 text-white px-2 py-1 rounded"
+                  className="text-sm bg-soft-pink hover:bg-border-pink text-pink-text px-3 py-1.5 rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
@@ -63,7 +64,7 @@ const TargetCard: React.FC<TargetCardProps> = ({ target, onUpdate, onDelete }) =
             </div>
           ) : (
             <div 
-              className={`flex-1 ${target.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}
+              className={`flex-1 cursor-pointer ${target.completed ? 'line-through text-pink-text/50' : 'text-pink-text'}`}
               onClick={() => setIsEditing(true)}
             >
               {target.description}
@@ -75,13 +76,15 @@ const TargetCard: React.FC<TargetCardProps> = ({ target, onUpdate, onDelete }) =
           <div className="flex space-x-2 ml-2">
             <button
               onClick={() => setIsEditing(true)}
-              className="text-gray-400 hover:text-blue-500"
+              className="text-pink-text/50 hover:text-primary-pink transition-colors"
+              aria-label="Edit target"
             >
               <PencilIcon className="h-4 w-4" />
             </button>
             <button
               onClick={() => onDelete(target.id)}
-              className="text-gray-400 hover:text-red-500"
+              className="text-pink-text/50 hover:text-primary-pink transition-colors"
+              aria-label="Delete target"
             >
               <TrashIcon className="h-4 w-4" />
             </button>
