@@ -2,22 +2,30 @@ import React, { useState } from 'react';
 import PlanCard from './PlanCard';
 import { useFirebase } from '../hooks/useFirebase';
 import { PlusIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
   const { plans, loading, addPlan } = useFirebase();
   const [isAdding, setIsAdding] = useState(false);
   const [newPlanTitle, setNewPlanTitle] = useState('');
+  const navigate = useNavigate();
 
   const handleAddPlan = async () => {
     if (!newPlanTitle.trim()) return;
     
     try {
-      await addPlan(newPlanTitle);
+      const planId = await addPlan(newPlanTitle);
       setNewPlanTitle('');
       setIsAdding(false);
+      // Navigate to the new plan's edit page
+      navigate(`/plan/edit/${planId}`);
     } catch (error) {
       console.error('Error adding plan:', error);
     }
+  };
+
+  const handlePlanClick = (planId: string) => {
+    navigate(`/plan/${planId}`);
   };
 
   if (loading) {
@@ -84,7 +92,15 @@ const Dashboard: React.FC = () => {
             <p className="text-pink-text/70">Create your first romantic goal to get started!</p>
           </div>
         ) : (
-          plans.map((plan) => <PlanCard key={plan.id} plan={plan} />)
+          plans.map((plan) => (
+            <div 
+              key={plan.id} 
+              onClick={() => handlePlanClick(plan.id)}
+              className="cursor-pointer transform transition-transform hover:scale-105"
+            >
+              <PlanCard plan={plan} />
+            </div>
+          ))
         )}
       </div>
     </div>

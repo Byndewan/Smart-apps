@@ -226,6 +226,16 @@ export const useFirebase = () => {
     await updateDoc(planRef, { steps: updatedSteps });
   };
 
+  const deleteStep = async (planId: string, stepId: string) => {
+    const planRef = doc(db, 'plans', planId);
+    const plan = plans.find(p => p.id === planId);
+
+    if (!plan) throw new Error('Plan not found');
+
+    const updatedSteps = plan.steps.filter(step => step.id !== stepId);
+    await updateDoc(planRef, { steps: updatedSteps });
+  };
+
   return {
     plans,
     loading,
@@ -234,6 +244,7 @@ export const useFirebase = () => {
     deletePlan,
     addStep,
     updateStep,
+    deleteStep,
     addTarget,
     updateTarget,
     deleteTarget,
